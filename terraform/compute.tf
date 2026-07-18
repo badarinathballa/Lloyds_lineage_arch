@@ -34,12 +34,7 @@ resource "google_compute_instance" "kong_sample_vm" {
     scopes = ["cloud-platform"]
   }
 
-  metadata_startup_script = <<-EOF
-    #!/bin/bash
-    apt-get update
-    apt-get install -y podman
-    echo "Podman installed: $(podman --version)" > /var/log/startup-script-done.log
-  EOF
+  metadata_startup_script = file("${path.module}/startup.sh")
 }
 
 output "vm_external_ip" {
